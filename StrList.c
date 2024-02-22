@@ -242,15 +242,29 @@ void StrList_removeAt(StrList* StrList, int index){
  * Checks if two StrLists have the same elements
  * returns 0 if not and any other number if yes
  */
-int StrList_isEqual(const StrList* StrList1, const StrList* StrList2);
+int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
+    StringNode* p1 = StrList1->head;
+    StringNode* p2 = StrList2->head;
+    while (p1 != NULL && p2 != NULL) {
+        if (strcmp(p1->data, p2->data) != 0) {
+            return 0;
+        }
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    if (p1 == NULL && p2 == NULL) {
+        return 1;
+    }
+    return 0;
+}
 
 /*
  * Clones the given StrList. 
  * It's the user responsibility to free it with StrList_free.
  */
-StrList* StrList_clone(const StrList* StrList){
+StrList* StrList_clone(const StrList* StrListOG){
     StrList* newStrList = StrList_alloc();
-    StringNode* p = StrList->head;
+    StringNode* p = StrListOG->head;
     while (p != NULL) {
         StrList_insertLast(newStrList, p->data);
         p = p->next;
@@ -258,25 +272,57 @@ StrList* StrList_clone(const StrList* StrList){
     return newStrList;
 }
 
-/*
- * Reverces the given StrList. 
- */
-void StrList_reverse( StrList* StrList);
 
-/*
- * Sort the given list in lexicographical order 
- */
-void StrList_sort( StrList* StrList);
+//Reverces the given StrList. 
+void StrList_reverse( StrList* StrList){
+    StringNode* prev = NULL;
+    StringNode* current = StrList->head;
+    StringNode* next = NULL;
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    StrList->head = prev;
+}
+
+
+//Sort the given list in lexicographical order 
+void StrList_sort( StrList* StrList){
+    StringNode* p = StrList->head;
+    StringNode* q = NULL;
+    while (p != NULL) {
+        q = p->next;
+        while (q != NULL) {
+            if (strcmp(p->data, q->data) > 0) {
+                char* temp = p->data;
+                p->data = q->data;
+                q->data = temp;
+            }
+            q = q->next;
+        }
+        p = p->next;
+    }
+}
+
 
 /*
  * Checks if the given list is sorted in lexicographical order
  * returns 1 for sorted,   0 otherwise
  */
-int StrList_isSorted(StrList* StrList);
-
-
-
-
+int StrList_isSorted(StrList* StrList){
+    StringNode* p = StrList->head;
+    StringNode* q = p->next;
+    while (q != NULL) {
+        if (strcmp(p->data, q->data) > 0) {
+            return 0;
+        }
+        p = q;
+        q = q->next;
+    }
+    return 1;
+}
 
 
 //------------------------------------------------
