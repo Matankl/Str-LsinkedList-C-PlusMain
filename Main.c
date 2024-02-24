@@ -1,12 +1,16 @@
 # include "StrList.h"
-# include <string.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int main(int argc, char const *argv[])
+
+int main()
 {
     //Define input stopper and list
     int input;
     int run = 1;
     StrList* list = StrList_alloc();
+    char word[100];
 
 
     while (run)
@@ -29,34 +33,56 @@ int main(int argc, char const *argv[])
 
     // Get a story from the user and add it to the list word by word
     case 1:
-        // char* story = (char*)malloc(1000);
-        // scanf("%s", story);
-        // char* word = strtok(story, " ");
-        // free(story);
+        // int wordsInStory = 0;
+        // scanf("%d", &wordsInStory);
+        // for (size_t i = 0; i < wordsInStory; i++)
+        // {
+        //     scanf("%s", word);
+        //     StrList_insertLast(list, word);
+        // }
 
+    // Get the number of words from the user
+    int numWords;
+    scanf("%d", &numWords);
+    getchar();  // Consume the newline character left in the input buffer
+
+    // Get the Story from the user
+    char inputBuffer[1000];  // Adjust the size based on your needs
+    fgets(inputBuffer, sizeof(inputBuffer), stdin);
+
+    // Tokenize the input and add each word to the StrList
+    char* token = strtok(inputBuffer, " \n");
+
+    // Loop until there are no more tokens or the desired number of words is reached
+    while (token != NULL && StrList_size(list) < (size_t)numWords) {
+        StrList_insertLast(list, token);
+        token = strtok(NULL, " \n");
+    }
+    
         break;
+
 
     // Get index and word from the user and add the word to the list at the given index
     case 2:
     //Scan the index and the word
     scanf("%d", &input);
-
-    char* word = (char*)malloc(100);
     scanf("%s", word);
 
     StrList_insertAt(list, word, input);
-    free(word);
         break;
+
 
     // Print the list
     case 3:
     StrList_print(list);
         break;
     
+
     // Print the size of the list
     case 4:
-    printf("%d\n", StrList_size(list));
+    printf("%ld\n", StrList_size(list));
         break;
+
 
     // Print the word at the given index
     case 5:
@@ -64,6 +90,7 @@ int main(int argc, char const *argv[])
     StrList_printAt(list, input);
         break;
     
+
     // Print the number of characters in the list
     case 6:
 
@@ -78,19 +105,17 @@ int main(int argc, char const *argv[])
 
     // Print how many times the word appears in the list
     case 7:
-    char* word = (char*)malloc(100);
     scanf("%s", word);
     printf("%d\n", StrList_count(list, word));
-    free(word);
     break;
+
 
     // Get a Word and delete all the nodes containing the word
     case 8:
-    char* word = (char*)malloc(100);
     scanf("%s", word);
     StrList_remove(list, word);
-    free(word);
     break;
+
 
     // Get an index and delete the node at the given index
     case 9:
@@ -98,10 +123,12 @@ int main(int argc, char const *argv[])
     StrList_removeAt(list, input);
     break;
 
+
     // Reverse the list
     case 10:
     StrList_reverse(list);
     break;
+
 
     // Delete all the nodes in the list
     case 11:
@@ -109,10 +136,12 @@ int main(int argc, char const *argv[])
     StrList* list = StrList_alloc();
     break;
 
+
     // Sort the list in lexicographical order
     case 12:
     StrList_sort(list);
     break;
+
 
     // Print is sorted in lexicographical order
     case 13:
@@ -143,7 +172,7 @@ int main(int argc, char const *argv[])
 /*
 TODO: Check if in case 4 the size type is correct for the print function
 TODO:  if you have freed everything you allocated
-TODO:  finish 6 
+TODO:  every time uses "%ld\n" or Size_t cahck if it is correct
 
 
 */

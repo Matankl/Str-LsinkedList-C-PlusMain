@@ -1,8 +1,9 @@
 #pragma once
 
-#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 /********************************************************************************
  *
@@ -121,10 +122,5 @@ int StrList_isSorted(StrList* StrList);
 
 
 
-/* ------------------- Node Declaration ------------------- */
-
-struct __StringNode;
-typedef struct __StringNode StringNode;
-// ifndef __StringNode StringNode;
 
 

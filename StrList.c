@@ -1,5 +1,7 @@
 #include "StrList.h"
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 //------------------------------------------------
@@ -20,12 +22,16 @@ typedef struct _StringNode {
 //------------------------------------------------
 
 // Function to create a new string node
-StringNode* createStringNode(const char *str) {
+StringNode* createStringNode(const char *str ) {
     // Allocate memory for the node
     StringNode *newNode = (StringNode*)malloc(sizeof(StringNode));
+    if (newNode == NULL) {
+        return NULL;
+    }
     
     // Allocate memory for the string data and copy the input string
-    newNode->data = strdup(str);
+    newNode-> data = strdup(str);
+
     
     // Initialize the next pointer to NULL
     newNode->next = NULL;
@@ -69,6 +75,9 @@ typedef struct _StrList {
 // Function to allocate memory for a new string list
 StrList* StrList_alloc(){
     StrList* p= (StrList*)malloc(sizeof(StrList));
+    if ( p==NULL)
+        return NULL;
+    
     p->head= NULL;
     p->size= 0;
     return p;
@@ -145,6 +154,7 @@ void StrList_print(const StrList* StrList){
         if (p != NULL)
             printf(" ");        
     }
+    printf("\n");
 }
 
 
@@ -312,16 +322,33 @@ void StrList_sort( StrList* StrList){
  * returns 1 for sorted,   0 otherwise
  */
 int StrList_isSorted(StrList* StrList){
+    if (StrList->head == NULL || StrList->head->next == NULL) {
+        return 1;
+    }
+    
     StringNode* p = StrList->head;
-    StringNode* q = p->next;
-    while (q != NULL) {
-        if (strcmp(p->data, q->data) > 0) {
+    
+    while (p->next != NULL) {
+        if (strcmp(p->data, p->next->data) > 0) {
             return 0;
         }
-        p = q;
-        q = q->next;
+        p = p->next;
     }
     return 1;
+}
+
+/* ------------------- Additional Methods ------------------- */
+ 
+ //Get data at index
+ char* StrList_getData(StrList* StrList, int index){
+    StringNode* p = StrList->head;
+    for (int i = 0; i < index; i++) {
+        if (p == NULL) {
+            return NULL;
+        }
+        p = p->next;
+    }
+    return p->data;
 }
 
 
