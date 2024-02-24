@@ -113,3 +113,18 @@ void StrList_sort( StrList* StrList);
  */
 int StrList_isSorted(StrList* StrList);
 
+
+/* ------------------- Additional Methods ------------------- */
+ 
+ //Get data at index
+ char* StrList_getData(StrList* StrList, int index);
+
+
+
+/* ------------------- Node Declaration ------------------- */
+
+struct __StringNode;
+typedef struct __StringNode StringNode;
+// ifndef __StringNode StringNode;
+
+
