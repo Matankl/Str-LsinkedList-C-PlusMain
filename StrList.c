@@ -167,7 +167,7 @@ void StrList_printAt(const StrList* Strlist,int index){
         }
         p = p->next;
     }
-    printf("%s", p->data);
+    printf("%s\n", p->data);
 }
 
 

@@ -133,10 +133,12 @@ int main()
     break;
 
 
-    // Delete all the nodes in the list
+    // Free all the nodes in the list 
     case 11:
-    StrList_free(list);
-    // StrList* list = StrList_alloc(); //have to fix delete
+    while (StrList_size(list) > 0)
+    {
+        StrList_removeAt(list, 0);
+    }
     break;
 
 
