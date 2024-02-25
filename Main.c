@@ -33,14 +33,17 @@ int main()
 
     // Get a story from the user and add it to the list word by word
     case 1:
+    //option A
         // int wordsInStory = 0;
         // scanf("%d", &wordsInStory);
-        // for (size_t i = 0; i < wordsInStory; i++)
+        // for (int i = 0; i < wordsInStory; i++)
         // {
         //     scanf("%s", word);
         //     StrList_insertLast(list, word);
         // }
 
+
+    //option B
     // Get the number of words from the user
     int numWords;
     scanf("%d", &numWords);
@@ -133,7 +136,7 @@ int main()
     // Delete all the nodes in the list
     case 11:
     StrList_free(list);
-    StrList* list = StrList_alloc();
+    // StrList* list = StrList_alloc(); //have to fix delete
     break;
 
 
@@ -145,10 +148,12 @@ int main()
 
     // Print is sorted in lexicographical order
     case 13:
-    StrList_isSorted(list);
+    if (StrList_isSorted(list))
+    printf("true\n");
+    else {printf("false\n");}
     break;
 }
-    
+
 
 
 
@@ -173,6 +178,7 @@ int main()
 TODO: Check if in case 4 the size type is correct for the print function
 TODO:  if you have freed everything you allocated
 TODO:  every time uses "%ld\n" or Size_t cahck if it is correct
+TODO:  fix delete
 
 
 */
